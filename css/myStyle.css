@@ -19,14 +19,15 @@ body {
 .rect2 {
 	margin-top: 10px;
 	width: 100%;
+	box-shadow: 1px 1px 2px 1px #d2d2d2;
 	height: 8rem;
-	box-shadow: 0px 1px 0px #d2d2d2;
 	background-color: #fff;
 	border-radius: 0.3rem;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 	justify-content: space-around;
+
 }
 
 .list {
@@ -88,6 +89,7 @@ body {
 	align-items: center;
 	justify-content: space-between;
 	padding: 0rem 1rem;
+	border-top:1px solid #eee;
 
 }
 
@@ -102,7 +104,7 @@ body {
 
 .itemRight {
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 }
 
 .mui-checkbox input[type=checkbox]:checked:before,

@@ -7,15 +7,15 @@
 		<title></title>
 		<link href="../css/mui.min.css" rel="stylesheet" />
 		<script src="index.js" type="text/javascript"></script>
-		<link href="../css/myStyle.css"  rel="stylesheet" />
+		<link href="../css/myStyle.css" rel="stylesheet" />
 	</head>
 	<body>
-		<div id="cnt">
+		<div id="cnt" style="opacity:0;">
 			<Navs titl="首页"></Navs>
 
-			<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+			<div id="pullrefresh" class="mui-content mui-scroll-wrapper" @touchmove="moveHandel">
 				<div class='list'>
-					<Items v-for="item in list" :item="item" @click="goDetail(item.id)"></Items>
+					<Items v-for="item in list" :tap="goDetail"  :item="item"></Items>
 				</div>
 				<template v-if="list.length==0">
 					<div class=" mui-block mui-visibility">
@@ -57,10 +57,25 @@
 			data: {
 				list: list,
 				currentPage: 1,
+				isMove:false
 			},
 			mounted() {
-				this.search();
+				mui.init({
+					pullRefresh: {
+						container: '#pullrefresh',
+						down: {
+							style: 'circle',
+							callback: pulldownRefresh
+						},
+						up: {
+							auto: false,
+							contentrefresh: '正在加载...',
+							callback: pullupRefresh
+						}
+					}
+				});
 				document.getElementById("cnt").style.opacity = 1;
+				this.search();
 			},
 			methods: {
 				search() {
@@ -84,28 +99,23 @@
 						console.log("没数据了")
 						mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
 					}
-
+                   this.isMove = false
+				},
+				moveHandel(){
+					this.isMove = true;
+					let that =this
+					setTimeout(()=>{
+						that.isMove = false
+					},1000)
 				},
 				goDetail(item) {
-					debugger;
+					if(this.isMove) return
+					location.href = "product.html?id=" + item.id;
 				}
 			}
 		})
 
-		mui.init({
-			pullRefresh: {
-				container: '#pullrefresh',
-				down: {
-					style: 'circle',
-					callback: pulldownRefresh
-				},
-				up: {
-					auto: false,
-					contentrefresh: '正在加载...',
-					callback: pullupRefresh
-				}
-			}
-		});
+		
 
 	}
 
