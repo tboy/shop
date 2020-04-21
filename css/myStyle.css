@@ -129,3 +129,19 @@ body {
     border-radius: 0.2rem !important;
 	background: #ffffff00;
 }
+
+.spRect{
+	background: #f1f1f1;
+	color:#1e1e1e;
+	font-size:0.8rem;
+	margin-top:0.6rem;
+	padding:0.1rem 0.5rem;
+	margin-right: 1rem;
+	border-radius: 5rem;
+}
+
+.act{
+	background: #fff1f0;
+	color:#ff2f21;
+	border:1px solid #ff2f21;
+}

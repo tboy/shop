@@ -7,7 +7,7 @@
 		<link href="../css/mui.min.css" rel="stylesheet" />
 		<script src="index.js" type="text/javascript"></script>
 		<link href="../css/myStyle.css" rel="stylesheet" />
-			<link href="../css/icons-extra.css" rel="stylesheet" />
+		<link href="../css/icons-extra.css" rel="stylesheet" />
 		<style>
 			.moneyTxt {
 				display: flex;
@@ -79,19 +79,21 @@
 				margin-top: -0.2rem;
 				margin-left: -5px;
 			}
-			.btnl{
+
+			.btnl {
 				border-top-right-radius: 0;
 				border-bottom-right-radius: 0;
-				width:6rem;
+				width: 6rem;
 				background-color: #ff6c62;
-				font-size:0.8rem;
-				
+				font-size: 0.8rem;
+
 			}
-			.btnr{
+
+			.btnr {
 				border-top-left-radius: 0;
 				border-bottom-left-radius: 0;
-				font-size:0.8rem;
-				width:6rem;
+				font-size: 0.8rem;
+				width: 6rem;
 			}
 		</style>
 	</head>
@@ -144,16 +146,58 @@
 				</div>
 			</div>
 
-	<div class='footer'>
-				<div class="itemRight">
+			<div class='footer'>
+				<div class="itemRight" @touchend="gotoBag">
 					<div class="mui-icon-extra mui-icon-extra-cart" style="width:1rem;height:1rem;margin-top:0rem;color:#1e1e1e;margin-left:0.5rem;"></div>
 					<div style="font-size:0.8rem;margin-top:0.5rem;text-align: center;color:#1e1e1e;">购物袋</div>
 				</div>
 				<div style="background: #ff6c62;border-radius:5rem ;">
-					<div  class="mui-btn btn btnl" @touchstart="submit">加入购物袋</div>
-					<div class="mui-btn btn btnr" @touchstart="del">立即购买</div>
+					<div class="mui-btn btn btnl" @touchstart="popo">加入购物袋</div>
+					<div class="mui-btn btn btnr" @touchstart="popo">立即购买</div>
 				</div>
-				
+
+			</div>
+
+
+
+			<div id="order" class="mui-popover mui-popover-action mui-popover-bottom">
+				<div style="width:100%;height:30rem;background: #fff;border-top-right-radius: 5px;border-top-left-radius: 5px;display: flex;flex-direction: column;justify-content: space-between;">
+					<div style="display: flex; flex-direction: column; width:90%;margin:auto;margin-top:1rem;">
+						
+						<div style="display: flex;flex-direction: row; width:100%;justify-content: space-between;">
+							<img :src="item.imgs[0]" style="display:flex;width:100px;height:100px;border-radius: 5px;margin-right:1rem;" />
+							<div style="display: flex;flex-direction: column;justify-content:space-between;">
+								<div class="detail" style="margin-top: -0.1rem;">
+									{{item.detail}}
+								</div>
+								<div class='moneyTxt'>
+									<div>￥<span style="font-size:1.5rem;">{{item.ge[item.sel].price}}</span></div>
+									<div>￥{{item.ge[item.sel].oPrice}}</div>
+								</div>
+							</div>
+						</div>
+						
+						<div style="display: flex;flex-direction: column; width:100%;">
+							<div style="font-size:1rem;margin-top:1rem;">产品选择</div>
+							<div style="display:flex;flex-wrap: wrap;flex-direction: row;">
+								<div v-for="(sp,idx) in item.ge" :class="idx==item.sel?'spRect act':'spRect'" @touchend="setSel(idx)">
+									{{sp.name}}
+								</div>
+							</div>
+						</div>
+						
+						<div style="display: flex;flex-direction: row; justify-content: space-between; width:100%;">
+							<div style="font-size:1rem;margin-top:1rem;">数量</div>
+							<div class="mui-numbox">
+								<button class="mui-btn mui-btn-numbox-minus" type="button" @touchend="subtra(item)">-</button>
+								<input class="mui-input-numbox" type="number" v-model="item.num" />
+								<button class="mui-btn mui-btn-numbox-plus" type="button" @touchend="add(item)">+</button>
+							</div>
+						</div>
+						
+					</div>
+					<div class="mui-btn btn" style="margin:auto;margin-bottom:1rem;width:90%;" @touchstart="popo">确定</div>
+				</div>
 			</div>
 
 		</div>
@@ -175,8 +219,11 @@
 				item: {
 					price: 12.00,
 					oPrice: 99,
+					sel:0,
+					num:1,
 					detail: '原切牛排新鲜肉眼黑椒牛肉10片澳洲进口儿童牛扒生鲜非腌制20',
 					subDetail: '原切牛排新鲜肉眼黑椒牛肉10片澳洲进口儿童牛扒生鲜非腌制20原切牛排新鲜肉眼黑椒牛肉10片澳洲进口儿童牛扒生鲜非腌制20精瘦有嚼劲，高性价比',
+					ge:[{id:0,price:12.50,oPrice:22.00,name:'5斤装'},{id:1,price:12.50,oPrice:582.00,name:'15斤装斤装斤装斤装'},{id:2,price:123.50,oPrice:232.00,name:'25斤装'},{id:3,price:132.50,oPrice:223.00,name:'35斤装斤装斤装斤装斤装'}],
 					imgs: [
 						'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=4090761004,2650025905&fm=26&gp=0.jpg',
 						'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3750666341,463573211&fm=26&gp=0.jpg'
@@ -190,12 +237,39 @@
 				mui.init({
 					swipeBack: true //启用右滑关闭功能
 				});
+
 				var slider = mui("#slider");
 			},
 			created() {
 
 			},
 			methods: {
+				gotoBag() {
+					window.location.href = 'bag.html'
+				},
+				culTotal(){
+					this.item.price = this.item.ge[this.item.sel].price*this.item.num;
+					this.item.oPrice = this.item.ge[this.item.sel].oPrice*this.item.num;
+					this.$forceUpdate();
+				},
+				subtra(item){
+					this.item.num--;
+					this.item.num = this.item.num<=0?1:this.item.num;
+					this.culTotal()
+				},
+				add(item){
+					this.item.num++;
+					this.culTotal()
+				},
+				setSel(idx){
+				
+					this.item.sel = idx;
+					this.culTotal()
+					
+				},
+				popo() {
+					mui('#order').popover('toggle');
+				},
 				search() {
 
 				}
