@@ -6,24 +6,96 @@
 		<title></title>
 		<link href="../css/mui.min.css" rel="stylesheet" />
 		<script src="index.js" type="text/javascript"></script>
+		<style>
+			.moneyTxt {
+				display: flex;
+				flex-direction: "row";
+			}
+
+			.moneyTxt div {
+				margin-right: 0.5rem;
+			}
+
+			.moneyTxt div:nth-child(1) {
+				color: #ff2d1f;
+				font-size: 1rem;
+			}
+
+			.moneyTxt div:nth-child(2) {
+				color: #ccc;
+				font-size: 0.8rem;
+				text-decoration: line-through;
+			}
+
+			.moneyTxt div:nth-child(3) {
+				border: 1px solid #4abb8c55;
+				font-size: 0.8rem;
+				color: #4abb8c;
+				border-radius: 5px;
+				padding: 1px 3px;
+			}
+
+			.detail {
+				font-size: 1rem;
+				font-weight: 600;
+				margin-top: 1rem;
+			}
+
+			.subDetail {
+				border: 1px solid #f2f2f2;
+				color: #999;
+				width: 100%;
+				font-size: 0.9rem;
+				font-weight: 100;
+				border-radius: 3px;
+				line-height: 1.5rem;
+				margin-top: 1rem;
+				height: 6rem;
+				padding: 1rem;
+				padding-top: 1.5rem;
+				text-align: justify;
+			}
+
+			.ang {
+				content: "";
+				width: 0;
+				height: 0;
+				display: block;
+				border: 5px solid transparent;
+				border-bottom-color: #f2f2f2;
+				margin-top: -2.2rem;
+			}
+
+			.ang:after {
+				content: "";
+				width: 0;
+				height: 0;
+				display: block;
+				border: 5px solid transparent;
+				border-bottom-color: #fff;
+				margin-top: -0.2rem;
+				margin-left: -5px;
+			}
+		</style>
 	</head>
 	<body>
 		<div id="cnt">
-			<Navs titl="首页"></Navs>
-      
-			<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
-				<div class='list'>
-					<Items v-for="item in list" :item="item" ></Items>
-					<template v-if="list.length==0">
-						<div class=" mui-block mui-visibility">
-							<div class="mui-pull">
-								<div class="mui-pull-loading mui-icon mui-spinner mui-hidden"></div>
-								<div class="mui-pull-caption mui-pull-caption-nomore">没有更多数据了</div>
-							</div>
-						</div>
-					</template>
+			<Navs titl="商品详情"></Navs>
+			<div class="mui-content list">
+				<div class='moneyTxt'>
+					<div>Y<span style="font-size:1.5rem;">12.66</span></div>
+					<div>Y122.22</div>
+					<div>包邮</div>
 				</div>
-				
+				<div class="detail">
+					原切牛排新鲜肉眼黑椒牛肉10片澳洲进口儿童牛扒生鲜非腌制20
+				</div>
+
+				<div class="subDetail">
+					<span class="ang"></span>
+					<div style="margin-top:0.5rem;">原切牛排新鲜肉眼黑椒牛肉10片澳洲进口儿童牛扒生鲜非腌制20原切牛排新鲜肉眼黑椒牛肉10片澳洲进口儿童牛扒生鲜非腌制20精瘦有嚼劲，高性价比
+					</div>
+				</div>
 			</div>
 
 		</div>
@@ -34,22 +106,9 @@
 	var app;
 
 	function initData() {
-		mui.init({
-			pullRefresh: {
-				container: '#pullrefresh',
-				down: {
-					style: 'circle',
-					callback: pulldownRefresh
-				},
-				up: {
-					auto: false,
-					contentrefresh: '正在加载...',
-					callback: pullupRefresh
-				}
-			}
-		});
+
 		let list = [];
-		
+
 		for (var i = 0; i < 10; i++) {
 			let item = {};
 			item.id = i;
@@ -76,36 +135,16 @@
 			},
 			methods: {
 				search() {
-				
-					if (this.currentPage != 1 && 10 == this.list.length) {
-						console.log("没数据了")
-						mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
-				
-					} else {
-						//mui('#pullrefresh').pullRefresh().endPullupToRefresh(false);
-						//mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
-				
-						mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
-						mui('#pullrefresh').pullRefresh().endPullupToRefresh(false);
-				
-					}
-					if (this.currentPage == 1) {
-						mui('#pullrefresh').pullRefresh().refresh(true);
-					}
-					if (this.currentPage == 1 && 10 <= 10) {
-						console.log("没数据了")
-						mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
-					}
-				
+
 				},
-				goDetail(item){
+				goDetail(item) {
 					debugger;
 				}
 			}
 		})
-		
 
-	
+
+
 	}
 
 	function pulldownRefresh() {
@@ -134,7 +173,7 @@
 	}
 
 	body {
-		background-color: #f7f7f7;
+		background-color: #fff;
 	}
 
 	.rect {
@@ -147,6 +186,7 @@
 	}
 
 	.list {
+		background-color: #fff;
 		display: flex;
 		flex-direction: row;
 		flex-wrap: wrap;
