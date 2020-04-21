@@ -1,0 +1,129 @@
+#cnt {
+	padding-top: 44px;
+}
+
+body {
+	background-color: #f7f7f7;
+}
+
+
+.rect {
+	margin-top: 10px;
+	width: 49%;
+	height: 280px;
+	box-shadow: 0px 1px 0px #d2d2d2;
+	background-color: #fff;
+	border-radius: 0.3rem;
+}
+
+.rect2 {
+	margin-top: 10px;
+	width: 100%;
+	height: 130px;
+	box-shadow: 0px 1px 0px #d2d2d2;
+	background-color: #fff;
+	border-radius: 0.3rem;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-around;
+}
+
+.list {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: center;
+	width: 95%;
+	margin: auto;
+	justify-content: space-between;
+}
+
+.p_img {
+	width: 100%;
+	border-radius: 0.3rem;
+
+}
+
+.bottomItem {
+	width: 93%;
+	margin: auto;
+	height: 5rem;
+	margin-top: 1rem;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+}
+
+.titleTxt {
+	font-size: 0.8rem;
+	color: #1e1e1e;
+	text-align: justify;
+}
+
+.price div:nth-child(1) {
+	font-size: 1rem;
+	color: red;
+	font-weight: 500;
+	float: left;
+}
+
+.price div:nth-child(2) {
+	font-size: 0.7rem;
+	color: #ccc;
+	text-decoration: line-through;
+}
+
+
+
+.footer {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	height: 3rem;
+	background: #FFFFFF;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0rem 1rem;
+
+}
+
+.btn {
+	background: #ff2d1f;
+	color: white;
+	width: 5rem;
+	font-size: 1rem;
+	border: 0;
+	border-radius: 5rem;
+}
+
+.itemRight {
+	display: flex;
+	flex-direction: row;
+}
+
+.mui-checkbox input[type=checkbox]:checked:before,
+.mui-radio input[type=radio]:checked:before {
+	color: #ff2d1f;
+}
+
+.mui-btn-numbox-plus,
+.mui-btn-numbox-minus {
+	background-color: #FFFFFF !important;
+}
+
+.mui-numbox {
+	border: 0;
+}
+
+.mui-numbox .mui-input-numbox, .mui-numbox .mui-numbox-input {
+	border-right:  1px solid #ccc !important;
+	border-left:  1px solid  #ccc !important;
+	border-top:  1px solid #ccc !important;
+	border-bottom:  1px solid  #ccc !important;
+    border-radius: 0.2rem !important;
+	background: #ffffff00;
+}
