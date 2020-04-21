@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+
+		<title></title>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<script src="index.js" type="text/javascript"></script>
+		<link href="../css/myStyle.css" rel="stylesheet" />
+		<style>
+
+		</style>
+	</head>
+	<body>
+		<div id="cnt">
+			<Navs titl="购物袋"></Navs>
+			<div>编辑</div>
+			<div class='list'>
+				<div class="rect2" v-for="item in list">
+					<div class="mui-input-row mui-checkbox" style="width:2.9rem;padding-left:3.5rem">
+						<input :name="'n'+item.id" type="checkbox" @touchend="selOne" v-model="item.sel">
+						<label>&nbsp;</label>
+					</div>
+					<img :src="item.img" style="width:100px;height:100px;border-radius: 5px;margin-left:-1rem" />
+					<div style="width:70%;display:flex;flex-direction: column;justify-content: space-between;padding-left:1rem;">
+						<div style="font-size:1rem;">{{item.title}}</div>
+						<div style="font-size:0.5rem;color:#ccc">产品选择:{{item.ge}}</div>
+						<div style="display: flex;flex-direction: row;justify-content: space-between;align-items: center;">
+							<div style="color:#ff2d1f;font-size:1.2rem;"><span style="font-size:1rem;">￥</span>{{item.price}}</div>
+							<div class="mui-numbox">
+								<button class="mui-btn mui-btn-numbox-minus" type="button" @touchend="subtra(item)">-</button>
+								<input class="mui-input-numbox" type="number" v-model="item.num" />
+								<button class="mui-btn mui-btn-numbox-plus" type="button" @touchend="add(item)">+</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div v-if="list.length==0">没有更多数据了</div>
+
+			<div class='footer'>
+				<div class="itemRight">
+					<div class="mui-input-row mui-checkbox" style="width:2.9rem;margin-top:0.8rem">
+
+						<input name="checkbox1" type="checkbox" @change="selAll" v-model="isSelAll">
+
+
+						<label>&nbsp;</label>
+					</div>
+					<div style="margin-top: 1.2rem;padding-right:1rem;margin-left:-1rem;font-size:0.8rem;">全选</div>
+					<div style="margin-top: 1.2rem;color:#ff2d1f;font-size:1.1rem;">合计:¥{{total}}</div>
+				</div>
+				<div class="mui-btn btn" @touchstart="submit">结算</div>
+			</div>
+		</div>
+	</body>
+</html>
+
+<script>
+	var app;
+
+	function initData() {
+
+		let list = [];
+
+		for (var i = 0; i < 2; i++) {
+			let item = {};
+			item.id = i;
+			item.img = 'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3750666341,463573211&fm=26&gp=0.jpg';
+
+			if (i % 2 == 0) {
+				item.img = 'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=4090761004,2650025905&fm=26&gp=0.jpg'
+			}
+			item.title = '【暖心助农 免疫力卫士】 四川安岳黄柠檬大果...';
+			item.price = '9.99';
+			item.oPrice = '19.99';
+			item.num = 1;
+			item.ge = "5斤装";
+			item.sel = false;
+			list.push(item)
+		}
+
+		app = new Vue({
+			el: '#cnt',
+			data: {
+				list: list,
+				isSelAll: false,
+				total: 0.00,
+			},
+			mounted() {
+				this.search();
+				document.getElementById("cnt").style.opacity = 1;
+			},
+			methods: {
+				submit() {
+					var pars = [];
+					this.list.map(item => {
+						if (item.sel) {
+							pars.push(item)
+						}
+					})
+					console.log(pars)
+				},
+				subtra(item){
+					item.num--;
+					item.num = item.num<=0?1:item.num;
+					this.culTotal()
+				},
+				add(item){
+					item.num++;
+					this.culTotal()
+				},
+				culTotal() {
+					this.total = 0.00;
+					this.list.map(item => {
+						if (item.sel) {
+							this.total += (item.num * item.price)
+						}
+					})
+					this.total = this.total.toFixed(2)
+
+				},
+				selAll() {
+					if (this.isSelAll) {
+						this.list.map(item => {
+							item.sel = true;
+						});
+					} else {
+						this.list.map(item => {
+							item.sel = false;
+						});
+					}
+					this.list.sort();
+					this.culTotal();
+					this.$forceUpdate();
+				},
+				selOne() {
+					let that = this;
+					setTimeout(() => {
+						that.total = 0;
+						let isAll = true;
+						that.list.map(item => {
+							if (!item.sel) {
+								isAll = false;
+							}
+						})
+						that.isSelAll = isAll;
+						this.culTotal();
+						that.list.sort();
+						that.$forceUpdate();
+
+					}, 200)
+
+				},
+				search() {
+
+
+
+				},
+				goDetail(item) {
+					debugger;
+				}
+			}
+		})
+
+
+
+	}
+</script>
