@@ -10,70 +10,60 @@
 		<link href="../css/myStyle.css" rel="stylesheet" />
 		<link href="../css/icons-extra.css" rel="stylesheet" />
 		<style>
-			body{
-			 background: #fff;
-		 }
+			body {
+				background: #fff;
+			}
+
+			.bline {
+				height: 6rem;
+				border-bottom: 0.2rem solid transparent;
+				background: linear-gradient(white, white) padding-box,
+					repeating-linear-gradient(-45deg, red 0, red 12.5%, transparent 0, transparent 25%, #58a 0, #58a 37.5%, transparent 0, transparent 50%) 0/2rem 2rem;
+			}
 		</style>
 	</head>
 	<body>
 		<div id="cnt" style="opacity: 0;">
-			<Navs titl="购物袋"></Navs>
-			<div style="margin-left: 1rem;font-size:0.9rem;color:#1e1e1e" @touchend="isEdit = !isEdit"><span v-if="!isEdit"
-				 class="mui-icon mui-icon-compose" style="color:#ccc;line-height:25px;"></span>{{isEdit?'完成':'编辑'}}</div>
+			<Navs titl="填写订单"></Navs>
+
 			<div class='list' style="padding-bottom: 8rem;" @touchmove="moveHandel">
-				<div class="rect2" v-for="item in list">
-					<div class="mui-input-row mui-checkbox" style="width:2.9rem;padding-left:3.5rem">
-						<input :name="'n'+item.id" type="checkbox" @touchend="selOne" v-model="item.sel">
-						<label>&nbsp;</label>
+				<div class="rect2 bline">
+					<div style="width:100%;display:flex;flex-direction:row;justify-content: space-between;align-items:center;padding-left:1rem;padding-right:1rem;">
+						<div style="display:flex;flex-direction:column;justify-content:space-between;font-size:0.9rem;">
+							<div style="display:flex;flex-direction:row;">
+								<div style="padding-right:1rem;">{{item.username}}</div>
+								<div>{{item.phone}}</div>
+							</div>
+							<div>{{item.address}}</div>
+						</div>
+
+						<div class="mui-icon mui-icon-arrowright" style="color:#ccc;font-size:1rem;font-weight: 600;"></div>
 					</div>
-					<img :src="item.img" style="width:100px;height:100px;border-radius: 5px;margin-left:-1rem" @touchend="gotoDetail(item)" />
+				</div>
+
+				<div class="rect2" v-for="item in list">
+
+					<img :src="item.img" style="width:100px;height:100px;border-radius: 5px;margin-left:1rem" @touchend="gotoDetail(item)" />
 					<div style="width:70%;display:flex;flex-direction: column;justify-content: space-between;padding-left:1rem;">
 						<div style="font-size:0.8rem;">{{item.title}}</div>
 						<div style="font-size:0.5rem;color:#ccc">产品选择:{{item.ge}}</div>
 						<div style="display: flex;flex-direction: row;justify-content: space-between;align-items: center;">
 							<div style="color:#ff2d1f;font-size:1.2rem;"><span style="font-size:1rem;">￥</span>{{item.price}}</div>
-							<div class="mui-numbox">
-								<button class="mui-btn mui-btn-numbox-minus" type="button" @touchend="subtra(item)">-</button>
-								<input class="mui-input-numbox" type="number" v-model="item.num" />
-								<button class="mui-btn mui-btn-numbox-plus" type="button" @touchend="add(item)">+</button>
-							</div>
+							<div style="font-size:0.8rem;color:#666;font-weight:600;padding-right:1rem;line-height:1.2rem;">x{{item.num}}</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div v-if="list.length==0" style="text-align: center;color:#ccc;font-size:0.7rem;">没有更多数据了</div>
 
-			<div class='footer' style="bottom: 2.9rem;">
+
+			<div class='footer'>
 				<div class="itemRight" style="flex-direction: row;">
-					<div class="mui-input-row mui-checkbox" style="width:2.9rem;margin-top:0.8rem">
-
-						<input name="checkbox1" type="checkbox" @change="selAll" v-model="isSelAll">
-
-
-						<label>&nbsp;</label>
-					</div>
-					<div style="margin-top: 1.2rem;padding-right:1rem;margin-left:-1rem;font-size:0.8rem;">全选</div>
-					<div v-if="!isEdit" style="margin-top: 1.2rem;color:#ff2d1f;font-size:1.1rem;">合计:¥{{total}}</div>
+					<div style="margin-top: 1.2rem;color:#ff2d1f;font-size:1.1rem;">实付:¥{{item.total}}</div>
 				</div>
-				<div v-if="!isEdit" class="mui-btn btn" @touchstart="submit">结算</div>
-				<div v-if="isEdit" class="mui-btn btn" @touchstart="del">删除</div>
+
+				<div class="mui-btn btn" @touchstart="del">提交订单</div>
 			</div>
-			<div class="footer" style="z-index:999999;">
-				<div style="width:100%;display:flex;flex-direction: row;justify-content: space-around;">
-					<div class="bar " @touchend="goHome">
-						<div class='mui-icon mui-icon-home-filled'></div>
-						<div>首页</div>
-					</div>
-					<div class="bar baractive">
-						<div class='mui-icon-extra mui-icon-extra-cart'></div>
-						<div>购物袋</div>
-					</div>
-					<div class="bar" @touchend="gotome">
-						<div class="mui-icon mui-icon-contact"></div>
-						<div>我的</div>
-					</div>
-				</div>
-			</div>
+
 
 		</div>
 	</body>
@@ -86,7 +76,7 @@
 
 		let list = [];
 
-		for (var i = 0; i < 20; i++) {
+		for (var i = 0; i < 3; i++) {
 			let item = {};
 			item.id = i;
 			item.img = 'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3750666341,463573211&fm=26&gp=0.jpg';
@@ -106,6 +96,13 @@
 		app = new Vue({
 			el: '#cnt',
 			data: {
+				item: {
+					total: 22.00,
+					username: '小黄',
+					phone: '1239423423',
+					address: '湖南省长沙市大理区小猪悬12区02号',
+				},
+
 				isMove: false,
 				list: list,
 				isSelAll: false,

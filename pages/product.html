@@ -236,7 +236,7 @@
 						</div>
 
 					</div>
-					<div class="mui-btn btn" style="margin:auto;margin-bottom:1rem;width:90%;" @touchstart="popo">确定</div>
+					<div class="mui-btn btn" style="margin:auto;margin-bottom:1rem;width:90%;" @touchstart="order">确定</div>
 				</div>
 			</div>
 
@@ -330,6 +330,9 @@
 				},
 				popo() {
 					mui('#order').popover('toggle');
+				},
+				order(){
+					location.href='order.html'
 				},
 				search() {
 
