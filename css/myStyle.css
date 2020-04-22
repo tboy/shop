@@ -163,3 +163,15 @@ body {
 	color: #ff2f21;
 	border: 1px solid #ff2f21;
 }
+
+.node{
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+
+	align-items: center;
+	width:23%;
+	margin-top:1rem;
+	line-height:1.8rem;
+	font-size:0.8rem;
+}

@@ -12,20 +12,105 @@
 	</head>
 	<style>
 		.top {
-			height: 15rem;
+			height: 10rem;
 			background-color: #FF5000;
 			background-image: -webkit-linear-gradient(left, #FD9126, #FF5000);
 			background-image: linear-gradient(to right, #FD9126, #FF5000);
-			border-bottom-left-radius: 100%;
-			border-bottom-right-radius: 100%;
+			border-bottom-left-radius: 20%;
+			border-bottom-right-radius: 20%;
 		}
 	</style>
 	<body>
 		<div id="cnt" style="opacity:0;padding-top:0;">
 			<div class="top">
-				个人中心
+				<div style="display: flex;flex-direction: row;height:3rem;align-items: center;padding-top:5rem;width:95%;margin:auto;">
+					<img :src="userInfo.head" style="width:3rem;border-radius: 100%;border:2px solid #fff;">
+					<div style="padding-left:0.5rem;color:#fff;font-size:1.2rem;font-weight: 600;">{{userInfo.name}}</div>
+				</div>
+				
 			</div>
-
+			
+			<div style="background: #fff;width:95%;height:12rem;margin:auto;margin-top:-2rem;border-radius: 5px;">
+				<div style="display: flex;flex-direction: row;justify-content: space-between;border-bottom: 1px solid #F1F1F1;height:3rem;align-items: center;">
+					<div style="font-size:1rem;font-weight: 600;padding-left:1rem;">
+						我的订单
+					</div>
+					<div style="color:#ACACB4;font-size:0.8rem;padding-right:0.5rem;">
+						所有订单
+						<div class="mui-icon mui-icon-arrowright" style="color:#ccc;font-size:1rem;font-weight: 600;"></div>
+					</div>
+				</div>
+				<div style="display: flex;flex-direction: row;flex-wrap: wrap;justify-content: space-between;color:#666;">
+					<div class='node'>
+						<div class="mui-icon-extra mui-icon-extra-prech"></div>
+						待付款
+					</div>
+					<div class='node'>
+						<div class="mui-icon-extra mui-icon-extra-gift"></div>
+						待发货
+					</div>
+					<div class='node'>
+						<div class="mui-icon-extra mui-icon-extra-express"></div>
+						待收货
+					</div>
+					<div class='node'>
+						<div class="mui-icon-extra mui-icon-extra-regist"></div>
+						已完成
+					</div>
+					<div class='node'>
+						<div class="mui-icon mui-icon-flag"></div>
+						售后
+					</div>
+				</div>
+				
+			</div>
+			<div style="background: #fff;width:95%;height:16rem;margin:auto;margin-top:1rem;border-radius: 5px;color:#666;">
+				<div style="display: flex;flex-direction: row;justify-content: space-between;border-bottom: 1px solid #F1F1F1;height:4rem;align-items: center;">
+					<div style="font-size:1rem;padding-left:1rem;">
+						<div class="mui-icon mui-icon-contact"></div>
+					   个人资料
+					</div>
+					<div style="color:#ACACB4;font-size:0.8rem;padding-right:0.5rem;">
+					
+						<div class="mui-icon mui-icon-arrowright" style="color:#ccc;font-size:1rem;font-weight: 600;"></div>
+					</div>
+				</div>
+				<div style="display: flex;flex-direction: row;justify-content: space-between;border-bottom: 1px solid #F1F1F1;height:4rem;align-items: center;">
+					<div style="font-size:1rem;padding-left:1rem;">
+						<div class="mui-icon mui-icon-map"></div>
+					   地址管理
+					</div>
+					<div style="color:#ACACB4;font-size:0.8rem;padding-right:0.5rem;">
+					
+						<div class="mui-icon mui-icon-arrowright" style="color:#ccc;font-size:1rem;font-weight: 600;"></div>
+					</div>
+				</div>
+				
+				<div style="display: flex;flex-direction: row;justify-content: space-between;border-bottom: 1px solid #F1F1F1;height:4rem;align-items: center;">
+					<div style="font-size:1rem;padding-left:1rem;">
+						<div class="mui-icon mui-icon-info"></div>
+					  投诉
+					</div>
+					<div style="color:#ACACB4;font-size:0.8rem;padding-right:0.5rem;">
+					
+						<div class="mui-icon mui-icon-arrowright" style="color:#ccc;font-size:1rem;font-weight: 600;"></div>
+					</div>
+				</div>
+				
+				<div style="display: flex;flex-direction: row;justify-content: space-between;border-bottom: 1px solid #F1F1F1;height:4rem;align-items: center;">
+					<div style="font-size:1rem;padding-left:1rem;">
+						<div class="mui-icon mui-icon-chatbubble"></div>
+					    关于
+					</div>
+					<div style="color:#ACACB4;font-size:0.8rem;padding-right:0.5rem;">
+					
+						<div class="mui-icon mui-icon-arrowright" style="color:#ccc;font-size:1rem;font-weight: 600;"></div>
+					</div>
+				</div>
+				
+				
+			</div>
+            <div style="height:4rem;"></div>
 			<div class="footer" style="z-index:999999;">
 				<div style="width:100%;display:flex;flex-direction: row;justify-content: space-around;">
 					<div class="bar" @touchend="goHome">
@@ -56,7 +141,10 @@
 		app = new Vue({
 			el: '#cnt',
 			data: {
-				userInfo: {}
+				userInfo: {
+					head:'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=4090761004,2650025905&fm=26&gp=0.jpg',
+					name:'小黄',
+				}
 			},
 			mounted() {
 				document.getElementById("cnt").style.opacity = 1;
