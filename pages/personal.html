@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+
+		<title></title>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<script src="index.js" type="text/javascript"></script>
+		<link href="../css/myStyle.css" rel="stylesheet" />
+		<link href="../css/icons-extra.css" rel="stylesheet" />
+	</head>
+	<style>
+		.top {
+			height: 15rem;
+			background-color: #FF5000;
+			background-image: -webkit-linear-gradient(left, #FD9126, #FF5000);
+			background-image: linear-gradient(to right, #FD9126, #FF5000);
+			border-bottom-left-radius: 100%;
+			border-bottom-right-radius: 100%;
+		}
+	</style>
+	<body>
+		<div id="cnt" style="opacity:0;padding-top:0;">
+			<div class="top">
+				个人中心
+			</div>
+
+			<div class="footer" style="z-index:999999;">
+				<div style="width:100%;display:flex;flex-direction: row;justify-content: space-around;">
+					<div class="bar" @touchend="goHome">
+						<div class='mui-icon mui-icon-home-filled'></div>
+						<div>首页</div>
+					</div>
+					<div class="bar" @touchend="gotobag">
+						<div class='mui-icon-extra mui-icon-extra-cart'></div>
+						<div>购物袋</div>
+					</div>
+					<div class="bar baractive">
+						<div class="mui-icon mui-icon-contact"></div>
+						<div>我的</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</body>
+</html>
+
+<script>
+	var app;
+
+	function initData() {
+
+
+		app = new Vue({
+			el: '#cnt',
+			data: {
+				userInfo: {}
+			},
+			mounted() {
+				document.getElementById("cnt").style.opacity = 1;
+			},
+			methods: {
+				goHome() {
+					location.href = "index.html"
+				},
+				gotobag() {
+					location.href = 'bag.html'
+				},
+				search() {
+
+
+				}
+			}
+		})
+	}
+</script>
