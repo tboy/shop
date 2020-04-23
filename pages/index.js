@@ -1,4 +1,4 @@
-var myJs = ["../js/mui.min.js","../js/vue.js", "components/nav.js","components/goodsItem.js",]
+var myJs = ["../js/vue.js", "components/nav.js","components/goodsItem.js","../js/mui.min.js",'../js/swiper.min.js']
 var myIdx = 0;
 window.onload = function() {
 	load(myJs[myIdx])

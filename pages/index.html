@@ -9,6 +9,7 @@
 		<script src="index.js" type="text/javascript"></script>
 		<link href="../css/myStyle.css" rel="stylesheet" />
 		<link href="../css/icons-extra.css" rel="stylesheet" />
+		<link href="../css/swiper.min.css" rel="stylesheet" />
 		<style>
 			.top {
 				height: 10rem;
@@ -22,6 +23,8 @@
 
 			img {
 				width: 100%;
+				height: 9rem;
+				border-radius: 5px;
 			}
 
 			.cata {
@@ -38,17 +41,19 @@
 				border-bottom: 2px solid #fff;
 				font-weight: bolder;
 			}
+			
 		</style>
 	</head>
 	<body>
 		<div id="cnt" style="opacity:0;padding-top:0">
+
 			<div class="top">
 				<div style="float:left;background-color: #fff;width:70%;height:2rem;border-radius: 2rem;padding-top:0.2rem;padding-left:0.5rem;color:#ccc;margin-left: 2.5%;">
 					<div class="mui-icon mui-icon-search" style="color:#d64c50;font-weight: 600;margin-right:0.5rem;"></div>搜索商品
 				</div>
-				<div style="color:#fff;text-align: center;width:2rem;float:right;padding-right:2.5%;">
+				<div style="color:#fff;text-align: center;width:3rem;float:right;padding-right:2.5%;">
 					<div class="mui-icon-extra mui-icon-extra-class" style="font-size:1.2rem;"></div>
-					<div style="font-size:0.6rem;margin-top:-0.3rem;">分类</div>
+					<div style="font-size:0.5rem;margin-top:-0.3rem;">分类</div>
 				</div>
 
 				<div style="width:95%;overflow-x: scroll;white-space: nowrap;height:3rem;margin:auto;margin-top:1rem;padding-top:0.5rem;">
@@ -61,40 +66,25 @@
 
 
 
-			<div id="pullrefresh" class="mui-content mui-scroll-wrapper" style="margin-top:7rem;background-color: #00000000;"
-			 @touchmove="moveHandel">
+			<div id="pullrefresh" class="mui-content mui-scroll-wrapper" style="margin-top:7rem;background-color: #00000000;" @touchmove="moveHandel">
 
-				<div class="mui-scroll">
-					<div id="slider" class="mui-slider" style="  width:95%;margin:auto;height:9rem;border-radius: 5px;;">
-						<div class="mui-slider-group mui-slider-loop">
-							<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
-							<div class="mui-slider-item mui-slider-item-duplicate">
-								<a href="#">
-									<img :src="item.length>1?item.imgs[item.imgs.length-1]:item.imgs[0]">
-								</a>
-							</div>
-							<!-- 第一张 -->
-							<div class="mui-slider-item" v-for="igs in item.imgs">
-								<a href="#">
-									<img :src="igs">
-								</a>
-							</div>
-							<!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
-							<div class="mui-slider-item mui-slider-item-duplicate">
-								<a href="#">
-									<img :src="item.imgs[0]">
-								</a>
-							</div>
-						</div>
-						<div class="mui-slider-indicator">
-							<div class="mui-indicator mui-active"></div>
-							<div class="mui-indicator" v-for="(igs,idx) in item.imgs" v-if="idx>0"></div>
+				<div class="mui-scroll" >
+
+					<div class="swiper-container" style="width:95%;margin:auto;height:9rem;border-radius: 5px;">
+						<div class="swiper-wrapper">
+							<div class="swiper-slide" v-for="igs in item.imgs"><img :src="igs"></div>
 
 						</div>
-
+						<!-- Add Pagination -->
+						<div class="swiper-pagination"></div>
+						<!-- Add Arrows -->
+						
 					</div>
 
-					<div class='list' style="background-color: #fff;">
+
+
+
+					<div class='list' style="background-color: #fff;width:100%;padding:2.5%">
 						<Items v-for="item in list" :tap="goDetail" :item="item"></Items>
 					</div>
 					<template v-if="list.length==0">
@@ -133,12 +123,8 @@
 
 <script>
 	var app;
-var slider = mui("#slider");
-				var gallery = mui('.mui-slider');
-				gallery.slider({
-					interval: 1000
-				});
-				debugger;
+	var slider;
+
 	function initData() {
 
 		let list = [];
@@ -186,12 +172,17 @@ var slider = mui("#slider");
 				item: {
 					imgs: [
 						'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=4090761004,2650025905&fm=26&gp=0.jpg',
-						'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3750666341,463573211&fm=26&gp=0.jpg'
+						'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3750666341,463573211&fm=26&gp=0.jpg',
+						'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3750666341,463573211&fm=26&gp=0.jpg',
+						'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=4090761004,2650025905&fm=26&gp=0.jpg'
 					],
 				},
 				list: list,
 				currentPage: 1,
 				isMove: false
+			},
+			updated() {
+				
 			},
 			mounted() {
 				mui.init({
@@ -211,9 +202,21 @@ var slider = mui("#slider");
 				});
 
 
-				
+
 				document.getElementById("cnt").style.opacity = 1;
+
+
 				this.search();
+				var swiper = new Swiper('.swiper-container', {
+					pagination: {
+						el: '.swiper-pagination',
+						type: 'fraction',
+					},
+					navigation: {
+						nextEl: '.swiper-button-next',
+						prevEl: '.swiper-button-prev',
+					},
+				});
 			},
 			methods: {
 				search() {

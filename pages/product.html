@@ -6,6 +6,7 @@
 		<title></title>
 		<link href="../css/mui.min.css" rel="stylesheet" />
 		<script src="index.js" type="text/javascript"></script>
+		<link href="../css/swiper.min.css" rel="stylesheet" />
 		<link href="../css/myStyle.css" rel="stylesheet" />
 		<link href="../css/icons-extra.css" rel="stylesheet" />
 		<style>
@@ -104,34 +105,17 @@
 	<body>
 		<div id="cnt" style="opacity: 0;">
 			<Navs titl="商品详情"></Navs>
-			<div id="slider" class="mui-slider">
-				<div class="mui-slider-group mui-slider-loop">
-					<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
-					<div class="mui-slider-item mui-slider-item-duplicate">
-						<a href="#">
-							<img :src="item.length>1?item.imgs[item.imgs.length-1]:item.imgs[0]">
-						</a>
-					</div>
-					<!-- 第一张 -->
-					<div class="mui-slider-item" v-for="igs in item.imgs">
-						<a href="#">
-							<img :src="igs">
-						</a>
-					</div>
-					<!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
-					<div class="mui-slider-item mui-slider-item-duplicate">
-						<a href="#">
-							<img :src="item.imgs[0]">
-						</a>
-					</div>
+			<div class="swiper-container" >
+				<div class="swiper-wrapper" >
+					<div class="swiper-slide" v-for="igs in item.imgs"><img style="display:inherit;" :src="igs"></div>
+			
 				</div>
-				<div class="mui-slider-indicator">
-					<div class="mui-indicator mui-active"></div>
-					<div class="mui-indicator" v-for="(igs,idx) in item.imgs" v-if="idx>0"></div>
-
-				</div>
-
+				<!-- Add Pagination -->
+				<div class="swiper-pagination"></div>
+				<!-- Add Arrows -->
+				
 			</div>
+			
 			<div class="mui-content list" style="padding-bottom: 1rem;">
 
 				<div class='moneyTxt'>
@@ -299,7 +283,16 @@
 					swipeBack: true //启用右滑关闭功能
 				});
 
-				var slider = mui("#slider");
+				var swiper = new Swiper('.swiper-container', {
+					pagination: {
+						el: '.swiper-pagination',
+						type: 'fraction',
+					},
+					navigation: {
+						nextEl: '.swiper-button-next',
+						prevEl: '.swiper-button-prev',
+					},
+				});
 			},
 			created() {
 
