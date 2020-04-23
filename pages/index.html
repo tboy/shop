@@ -9,23 +9,104 @@
 		<script src="index.js" type="text/javascript"></script>
 		<link href="../css/myStyle.css" rel="stylesheet" />
 		<link href="../css/icons-extra.css" rel="stylesheet" />
+		<style>
+			.top {
+				height: 10rem;
+				padding-top: 1rem;
+				background-color: #ef5d62;
+				background-image: -webkit-linear-gradient(left, #ff2c1e, #ff2d1f);
+				background-image: linear-gradient(to bottom, #ff2c1e, #ff2d1f);
+				border-bottom-left-radius: 20%;
+				border-bottom-right-radius: 20%;
+			}
+
+			img {
+				width: 100%;
+			}
+
+			.cata {
+				font-size: 1.2rem;
+				color: #F3F3F3;
+				margin-left: 0.5rem;
+				display: inline-block;
+			}
+
+			.acte {
+				font-size: 1.3rem;
+				color: #fff;
+				padding-bottom: 0.5rem;
+				border-bottom: 2px solid #fff;
+				font-weight: bolder;
+			}
+		</style>
 	</head>
 	<body>
-		<div id="cnt" style="opacity:0;">
-			<Navs titl="首页"></Navs>
-
-			<div id="pullrefresh" class="mui-content mui-scroll-wrapper" @touchmove="moveHandel">
-				<div class='list'>
-					<Items v-for="item in list" :tap="goDetail" :item="item"></Items>
+		<div id="cnt" style="opacity:0;padding-top:0">
+			<div class="top">
+				<div style="float:left;background-color: #fff;width:70%;height:2rem;border-radius: 2rem;padding-top:0.2rem;padding-left:0.5rem;color:#ccc;margin-left: 2.5%;">
+					<div class="mui-icon mui-icon-search" style="color:#d64c50;font-weight: 600;margin-right:0.5rem;"></div>搜索商品
 				</div>
-				<template v-if="list.length==0">
-					<div class=" mui-block mui-visibility">
-						<div class="mui-pull">
-							<div class="mui-pull-loading mui-icon mui-spinner mui-hidden"></div>
-							<div class="mui-pull-caption mui-pull-caption-nomore">没有更多数据了</div>
-						</div>
+				<div style="color:#fff;text-align: center;width:2rem;float:right;padding-right:2.5%;">
+					<div class="mui-icon-extra mui-icon-extra-class" style="font-size:1.2rem;"></div>
+					<div style="font-size:0.6rem;margin-top:-0.3rem;">分类</div>
+				</div>
+
+				<div style="width:95%;overflow-x: scroll;white-space: nowrap;height:3rem;margin:auto;margin-top:1rem;padding-top:0.5rem;">
+					<div v-for="(ct,idx) in cat" :class="idx==sel?'cata acte':'cata'">
+						{{ct.name}}
 					</div>
-				</template>
+				</div>
+			</div>
+
+
+
+
+			<div id="pullrefresh" class="mui-content mui-scroll-wrapper" style="margin-top:7rem;background-color: #00000000;"
+			 @touchmove="moveHandel">
+
+				<div class="mui-scroll">
+					<div id="slider" class="mui-slider" style="  width:95%;margin:auto;height:9rem;border-radius: 5px;;">
+						<div class="mui-slider-group mui-slider-loop">
+							<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
+							<div class="mui-slider-item mui-slider-item-duplicate">
+								<a href="#">
+									<img :src="item.length>1?item.imgs[item.imgs.length-1]:item.imgs[0]">
+								</a>
+							</div>
+							<!-- 第一张 -->
+							<div class="mui-slider-item" v-for="igs in item.imgs">
+								<a href="#">
+									<img :src="igs">
+								</a>
+							</div>
+							<!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
+							<div class="mui-slider-item mui-slider-item-duplicate">
+								<a href="#">
+									<img :src="item.imgs[0]">
+								</a>
+							</div>
+						</div>
+						<div class="mui-slider-indicator">
+							<div class="mui-indicator mui-active"></div>
+							<div class="mui-indicator" v-for="(igs,idx) in item.imgs" v-if="idx>0"></div>
+
+						</div>
+
+					</div>
+
+					<div class='list' style="background-color: #fff;">
+						<Items v-for="item in list" :tap="goDetail" :item="item"></Items>
+					</div>
+					<template v-if="list.length==0">
+						<div class=" mui-block mui-visibility">
+							<div class="mui-pull">
+								<div class="mui-pull-loading mui-icon mui-spinner mui-hidden"></div>
+								<div class="mui-pull-caption mui-pull-caption-nomore">没有更多数据了</div>
+							</div>
+						</div>
+					</template>
+
+				</div>
 			</div>
 
 
@@ -52,7 +133,12 @@
 
 <script>
 	var app;
-
+var slider = mui("#slider");
+				var gallery = mui('.mui-slider');
+				gallery.slider({
+					interval: 1000
+				});
+				debugger;
 	function initData() {
 
 		let list = [];
@@ -74,6 +160,35 @@
 		app = new Vue({
 			el: '#cnt',
 			data: {
+				sel: 0,
+				cat: [{
+					id: 0,
+					name: '全部'
+				}, {
+					id: 0,
+					name: '生鲜水果'
+				}, {
+					id: 0,
+					name: '服饰搭配'
+				}, {
+					id: 0,
+					name: '家具家电'
+				}, {
+					id: 0,
+					name: '居家百货'
+				}, {
+					id: 0,
+					name: '母婴专区'
+				}, {
+					id: 0,
+					name: '美酒美吃'
+				}],
+				item: {
+					imgs: [
+						'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=4090761004,2650025905&fm=26&gp=0.jpg',
+						'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3750666341,463573211&fm=26&gp=0.jpg'
+					],
+				},
 				list: list,
 				currentPage: 1,
 				isMove: false
@@ -91,8 +206,12 @@
 							contentrefresh: '正在加载...',
 							callback: pullupRefresh
 						}
-					}
+					},
+					swipeBack: true //启用右滑关闭功能
 				});
+
+
+				
 				document.getElementById("cnt").style.opacity = 1;
 				this.search();
 			},
@@ -127,11 +246,11 @@
 						that.isMove = false
 					}, 1000)
 				},
-				gotobag(){
-					location.href="bag.html"
+				gotobag() {
+					location.href = "bag.html"
 				},
-				gotome(){
-				    location.href='personal.html'	
+				gotome() {
+					location.href = 'personal.html'
 				},
 				goDetail(item) {
 					if (this.isMove) return
