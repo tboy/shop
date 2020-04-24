@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<script src="index.js" type="text/javascript"></script>
+		<link href="../css/swiper.min.css" rel="stylesheet" />
+		<link href="../css/myStyle.css" rel="stylesheet" />
+		<link href="../css/icons-extra.css" rel="stylesheet" />
+
+	</head>
+	<body>
+		<div id="cnt" style="opacity: 0;">
+			<Navs titl=""></Navs>
+			<div style="display: flex;flex-direction: row;justify-content: space-between;align-items: center;">
+				<div style="float:left;background-color: #F2F2F2;width:85%;height:2rem;border-radius: 2rem;padding-top:0.2rem;padding-left:0.5rem;margin-left: 2.5%;display: flex;flex-direction: row;align-items: center;">
+					<div class="mui-icon mui-icon-search" style="color:#ccc;font-weight: 600;"></div>
+					<input type='text' style="background: rgba(0,0,0,0); border:0;margin-top:1rem;font-size:0.8rem;" placeholder="搜索商品" />
+				</div>
+				<div style="margin-right: 2.5%;color:#ff2f21;font-size:0.9rem;font-weight: 600;">
+					搜索
+				</div>
+			</div>
+
+			<div id="pullrefresh" class="mui-content mui-scroll-wrapper" style="margin-top:3rem;background-color: #00000000;"
+			 @touchmove="moveHandel">
+
+				<div class="mui-scroll">
+
+					<div class='list' style="background-color: #fff;width:100%;padding:2.5%">
+						<Items v-for="item in list" :tap="goDetail" :item="item"></Items>
+					</div>
+					<template v-if="list.length==0">
+						<div class=" mui-block mui-visibility">
+							<div class="mui-pull">
+								<div class="mui-pull-loading mui-icon mui-spinner mui-hidden"></div>
+								<div class="mui-pull-caption mui-pull-caption-nomore">没有更多数据了</div>
+							</div>
+						</div>
+					</template>
+
+				</div>
+			</div>
+
+
+		</div>
+	</body>
+</html>
+
+<script>
+	var app;
+
+	function initData() {
+
+		let list = [];
+
+		for (var i = 0; i < 10; i++) {
+			let item = {};
+			item.id = i;
+			item.img = 'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3750666341,463573211&fm=26&gp=0.jpg';
+
+			if (i % 2 == 0) {
+				item.img = 'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=4090761004,2650025905&fm=26&gp=0.jpg'
+			}
+			item.title = '【暖心助农 免疫力卫士】 四川安岳黄柠檬大果...';
+			item.price = '9.99';
+			item.oPrice = '19.99';
+			list.push(item)
+		}
+
+
+
+		app = new Vue({
+			el: '#cnt',
+			data: {
+				list: list,
+				currentPage: 1,
+			},
+			mounted() {
+				this.search();
+				document.getElementById("cnt").style.opacity = 1;
+				mui.init({
+					swipeBack: true //启用右滑关闭功能
+				});
+
+				var swiper = new Swiper('.swiper-container', {
+					pagination: {
+						el: '.swiper-pagination',
+						type: 'fraction',
+					},
+					navigation: {
+						nextEl: '.swiper-button-next',
+						prevEl: '.swiper-button-prev',
+					},
+				});
+			},
+			created() {
+
+			},
+			methods: {
+				moveHandel(){
+					
+				},
+				goDetail(item){
+					
+				},
+				search() {
+
+				}
+			}
+		})
+
+
+
+
+
+
+
+	}
+</script>
+<style>
+	#cnt {
+		padding-top: 44px;
+	}
+
+	body {
+		background-color: #fff;
+	}
+
+	.rect {
+		margin-top: 10px;
+		width: 49%;
+		height: 280px;
+		box-shadow: 0px 1px 0px #d2d2d2;
+		background-color: #fff;
+		border-radius: 0.3rem;
+	}
+
+	.list {
+		background-color: #fff;
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		align-items: center;
+		width: 95%;
+		margin: auto;
+		justify-content: space-between;
+	}
+
+	.p_img {
+		width: 100%;
+		border-radius: 0.3rem;
+
+	}
+
+	.bottomItem {
+		width: 93%;
+		margin: auto;
+		height: 5rem;
+		margin-top: 1rem;
+
+		display: flex;
+		flex-direction: column;
+		justify-content: space-around;
+	}
+
+	.titleTxt {
+		font-size: 0.8rem;
+		color: #1e1e1e;
+		text-align: justify;
+	}
+
+	.price div:nth-child(1) {
+		font-size: 1rem;
+		color: red;
+		font-weight: 500;
+		float: left;
+	}
+
+	.price div:nth-child(2) {
+		font-size: 0.7rem;
+		color: #ccc;
+		text-decoration: line-through;
+	}
+</style>
