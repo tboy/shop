@@ -48,7 +48,7 @@
 		<div id="cnt" style="opacity:0;padding-top:0">
 
 			<div class="top">
-				<div style="float:left;background-color: #fff;width:70%;height:2rem;border-radius: 2rem;padding-top:0.2rem;padding-left:0.5rem;color:#ccc;margin-left: 2.5%;">
+				<div @touchend="gotoSearch" style="float:left;background-color: #fff;width:70%;height:2rem;border-radius: 2rem;padding-top:0.2rem;padding-left:0.5rem;color:#ccc;margin-left: 2.5%;">
 					<div class="mui-icon mui-icon-search" style="color:#d64c50;font-weight: 600;margin-right:0.5rem;"></div>搜索商品
 				</div>
 				<div style="color:#fff;text-align: center;width:3rem;float:right;padding-right:2.5%;">
@@ -56,7 +56,7 @@
 					<div style="font-size:0.5rem;margin-top:-0.3rem;">分类</div>
 				</div>
 
-				<div style="width:95%;overflow-x: scroll;white-space: nowrap;height:3rem;margin:auto;margin-top:1rem;padding-top:0.5rem;">
+				<div @touchend="gotoCata" style="width:95%;overflow-x: scroll;white-space: nowrap;height:3rem;margin:auto;margin-top:1rem;padding-top:0.5rem;">
 					<div v-for="(ct,idx) in cat" :class="idx==sel?'cata acte':'cata'">
 						{{ct.name}}
 					</div>
@@ -254,6 +254,12 @@
 				},
 				gotome() {
 					location.href = 'personal.html'
+				},
+				gotoSearch(){
+					location.href="search.html"
+				},
+				gotoCata(){
+					location.href='cata.html'
 				},
 				goDetail(item) {
 					if (this.isMove) return
