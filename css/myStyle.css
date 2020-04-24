@@ -178,11 +178,11 @@ body {
 	font-size:0.8rem;
 }
 .swiper-pagination-fraction{
-	background: #cccccc99;
+	background: rgba(204,204,204,0.6);
 	border-radius: 1rem;
 	width:2rem !important;
 	font-size:0.6rem;
 	left:90% !important;
 	display: block;
-	color:#FFFFFFaa;
+	color:rgba(225,225,225,1);
 }

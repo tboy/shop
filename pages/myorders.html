@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+
+		<title></title>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<script src="index.js" type="text/javascript"></script>
+		<link href="../css/myStyle.css" rel="stylesheet" />
+		<link href="../css/icons-extra.css" rel="stylesheet" />
+		<style>
+			body {
+				background: #fff;
+			}
+
+			.tap {
+				font-size: 1rem;
+				color: #1E1E1E;
+
+			}
+
+			.acte {
+				border-bottom: 0.1rem solid #FF2D1F;
+				color: #FF2D1F;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="cnt" style="opacity: 0;">
+			<Navs titl="我的订单"></Navs>
+
+			<div style="height:3rem;display:flex;flex-direction: row;justify-content: space-around;align-items: center;position: fixed;top:2.7rem;width: 100%;background-color: #fff;">
+				<div v-for="(statu,idx) in status" :class="statusIdx==idx?'tap acte':'tap'" @touchend="setIdx(idx)">
+					{{statu.name}}
+				</div>
+			</div>
+			<div class='list' style="padding-bottom: 8rem;margin-top:3rem;" @touchmove="moveHandel">
+				<div class="rect2" style="flex-direction: column;justify-content: space-between;height:auto;"  v-for="order in list">
+                   <div style="display: flex;flex-direction: row;justify-content: space-between;width:100%;padding:1rem;font-size:0.8rem;">
+					   <div>订单编号:{{order.orderNum}}</div>
+					   <div style="color:#FF2D1F;">{{statusArr[order.status]}}</div>
+				   </div>
+				  
+					<div class="rect2"  style="margin:0;border:0;box-shadow: 0 0 0 #000000;background-color: #f2f2f2;border-radius: 0;margin-top: 0.1rem;;"  v-for="item in order.goods">
+						
+						<img :src="item.img" style="width:100px;height:100px;border-radius: 5px;margin-left:1rem" @touchend="gotoDetail(item)" />
+						<div style="width:70%;display:flex;flex-direction: column;justify-content: space-between;padding-left:1rem;">
+							<div style="font-size:0.8rem;">{{item.title}}</div>
+							<div style="font-size:0.5rem;color:#ccc">产品选择:{{item.subTitl}}</div>
+							<div style="display: flex;flex-direction: row;justify-content: space-between;align-items: center;">
+								<div style="color:#ff2d1f;font-size:1.2rem;"><span style="font-size:1rem;">￥</span>{{item.price}}</div>
+								<div style="font-size:0.8rem;color:#666;font-weight:600;padding-right:1rem;line-height:1.2rem;">x{{item.num}}</div>
+							</div>
+						</div>
+					</div>
+					   
+				  
+				  
+				   <div style="color:#1E1E1E;text-align: right;width:100%;padding-right:1rem;font-size:0.9rem;padding:1rem;">
+					   共 {{order.num}} 件商品  合计：<span style="color:#000;font-weight: 600;">￥{{order.total}}</span>
+				   </div>
+				</div>
+			</div>
+
+
+
+
+
+		</div>
+	</body>
+</html>
+
+<script>
+	var app;
+
+	function initData() {
+
+
+
+		app = new Vue({
+			el: '#cnt',
+			data: {
+				statusIdx: 0,
+				status: [{
+					id: -1,
+					name: "全部"
+				}, {
+					id: 1,
+					name: '待付款'
+				}, {
+					id: 2,
+					name: '待发货'
+				}, {
+					id: 3,
+					name: '待收货'
+				}, {
+					id: 4,
+					name: '已完成'
+				}],
+				statusArr:{
+					1:"待付款",
+					2:'待发货'
+				},
+				list: [{
+					orderNum: '123123123125',
+					status: 1,
+					total: '123.22',
+					num: 14,
+					goods: [{
+							img: 'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=4090761004,2650025905&fm=26&gp=0.jpg',
+							title: '原切牛排新鲜肉眼黑椒牛肉10片澳洲进口儿童牛扒生鲜非腌制20',
+							subTitl: '5斤装',
+							price: '12.2',
+							num: 2
+						},
+						{
+							img: 'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=4090761004,2650025905&fm=26&gp=0.jpg',
+							title: '原切牛排新鲜牛扒生鲜非腌制20',
+							subTitl: '5斤装',
+							price: '12.2',
+							num: 12
+						}
+					]
+				},
+				{
+					orderNum: '993123123125',
+					status: 2,
+					total: '123.22',
+					num: 14,
+					goods: [{
+							img: 'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=4090761004,2650025905&fm=26&gp=0.jpg',
+							title: '原切牛排新鲜肉眼黑椒牛肉10片澳洲进口儿童牛扒生鲜非腌制20',
+							subTitl: '5斤装',
+							price: '12.2',
+							num: 2
+						},
+						{
+							img: 'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=4090761004,2650025905&fm=26&gp=0.jpg',
+							title: '原切牛排新鲜牛扒生鲜非腌制20',
+							subTitl: '5斤装',
+							price: '12.2',
+							num: 12
+						}
+					]
+				}]
+			},
+			mounted() {
+				this.search();
+				document.getElementById("cnt").style.opacity = 1;
+			},
+			methods: {
+				setIdx(idx) {
+					this.statusIdx = idx;
+				},
+				goHome() {
+					location.href = "index.html"
+				},
+				gotome() {
+					location.href = 'personal.html'
+				},
+				gotoDetail(item) {
+					if (this.isMove) return
+					location.href = "product.html?id=" + item.id;
+				},
+				moveHandel() {
+					this.isMove = true;
+					let that = this
+					setTimeout(() => {
+						that.isMove = false
+					}, 1000)
+				},
+				submit() {
+					var pars = [];
+					this.list.map(item => {
+						if (item.sel) {
+							pars.push(item)
+						}
+					})
+					console.log(pars)
+				},
+				del() {
+					let lt = [];
+					this.list.map(item => {
+						if (item.sel) {
+
+						} else {
+							lt.push(item)
+						}
+					})
+					this.list = lt;
+					this.list.sort();
+					this.culTotal();
+				},
+				subtra(item) {
+					item.num--;
+					item.num = item.num <= 0 ? 1 : item.num;
+					this.culTotal()
+				},
+				add(item) {
+					item.num++;
+					this.culTotal()
+				},
+				culTotal() {
+					this.total = 0.00;
+					this.list.map(item => {
+						if (item.sel) {
+							this.total += (item.num * item.price)
+						}
+					})
+					this.total = this.total.toFixed(2)
+
+				},
+				selAll() {
+					if (this.isSelAll) {
+						this.list.map(item => {
+							item.sel = true;
+						});
+					} else {
+						this.list.map(item => {
+							item.sel = false;
+						});
+					}
+					this.list.sort();
+					this.culTotal();
+					this.$forceUpdate();
+				},
+				selOne() {
+					let that = this;
+					setTimeout(() => {
+						that.total = 0;
+						let isAll = true;
+						that.list.map(item => {
+							if (!item.sel) {
+								isAll = false;
+							}
+						})
+						that.isSelAll = isAll;
+						this.culTotal();
+						that.list.sort();
+						that.$forceUpdate();
+
+					}, 200)
+
+				},
+				search() {
+
+
+
+				},
+				goDetail(item) {
+					debugger;
+				}
+			}
+		})
+
+
+
+	}
+</script>
