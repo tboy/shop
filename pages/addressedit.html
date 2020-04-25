@@ -10,63 +10,62 @@
 		<link href="../css/myStyle.css" rel="stylesheet" />
 		<link href="../css/icons-extra.css" rel="stylesheet" />
 		<style>
-			body {
-				background: #fff;
-			}
-
-			.bline {
-				height: 6rem;
-				border-bottom: 0.2rem solid transparent;
-				background: linear-gradient(white, white) padding-box,
-					repeating-linear-gradient(-45deg, red 0, red 12.5%, transparent 0, transparent 25%, #58a 0, #58a 37.5%, transparent 0, transparent 50%) 0/2rem 2rem;
-			}
+		
+       .row{
+		   width:100%;
+		   background-color: #fff;
+		   border-bottom: 1px solid #f2f2f2;
+		   display: flex;
+		   height:3rem;
+		   padding-left:1rem;
+		   line-height:3rem;
+	   }
+	   
+	   .row div{
+		   width:7rem;
+	   }
+	   input{
+		   border:0;
+		   
+	   }
+			
 		</style>
 	</head>
 	<body>
 		<div id="cnt" style="opacity: 0;">
-			<Navs titl="地址管理"></Navs>
+			<Navs titl="编辑地址"></Navs>
 
-			<div class='list' style="padding-bottom: 8rem;" @touchmove="moveHandel">
-				
-
-				<div class="rect2 " style="flex-direction: column;" v-for="item2 in list">
-					<div style="width:100%;display:flex;flex-direction:row;justify-content: space-between;align-items:center;padding-left:1rem;padding-right:1rem;">
-						<div style="display:flex;flex-direction:column;justify-content:space-between;font-size:1rem;">
-							<div style="display:flex;flex-direction:row;font-weight: 600;">
-								<div style="padding-right:1rem;">{{item.username}}</div>
-								<div>{{item.phone}}</div>
-							</div>
-							<div style="margin-top:0.5rem;">{{item.address}}</div>
-						</div>
-					</div>
-
-					<div style="height:2.6rem;width:100%;display: flex;flex-direction: row;justify-content: space-between;border-top:1px solid #f2f2f2;padding-top:1rem;padding-right:1rem;">
-
-						<div style="display: flex;flex-direction: row;">
-							<div class="mui-input-row mui-checkbox" style="width:2.9rem;padding-left:3.5rem">
-								<input :name="'n'+item.id" type="checkbox" style="top:-3px;" @touchend="selOne" v-model="item.sel">
-								<label>&nbsp;</label>
-							</div>
-							<span style="font-size:0.9rem;padding-top:0.2rem;margin-left:-1rem;">设为默认</span>
-						</div>
-
-						<div style="width:40%;display:flex;flex-direction: row;justify-content: space-between;">
-							<span class="mui-icon mui-icon-compose" ><span style="font-size:0.9rem;" @touchend="gotoEidt(item.id)">编辑</span></span>
-							<span class="mui-icon mui-icon-trash" ><span style="font-size:0.9rem;">删除</span></span>
-						</div>
-					</div>
-
-
+			<div>
+				<div class='row'>
+					<div>收货人名称</div> <input v-model="item.name" />
 				</div>
-</div>
-
-				<div class='footer'>
-					
-					<div class="mui-btn btn"  style="width:100%;margin:auto;" @touchstart="del">新建地址</div>
+				<div class='row'>
+					<div>电话号码</div> <input v-model="item.name" />
+				</div>
+				<div class='row'>
+					<div>选择地区</div> <input readonly="readonly" style="width:61%;" /><div class="mui-icon mui-icon-arrowright" style="color: rgb(204, 204, 204);font-size: 1rem;font-weight: 600;width: 1rem;line-height: 3rem;"></div>
+				</div>
+				<div class='row'>
+					<div>详细地址</div>  <input v-model="item.name" />
 				</div>
 
-
+				<div class='row' style="margin-top:.5rem;">
+					<div class="mui-input-row mui-checkbox" style="width:2.9rem;margin-top:0.8rem">
+						<input name="checkbox1" style="top:-2px;" type="checkbox" @change="selAll" v-model="isSelAll">
+						<label style="padding:0">&nbsp;</label>
+					</div>
+					<div>设为默认</div> 
+				</div>
 			</div>
+
+
+			<div class='footer'>
+
+				<div class="mui-btn btn" style="width:100%;margin:auto;" @touchstart="del">保存</div>
+			</div>
+
+
+		</div>
 	</body>
 </html>
 
@@ -115,9 +114,6 @@
 				document.getElementById("cnt").style.opacity = 1;
 			},
 			methods: {
-				gotoEidt(id){
-					location.href="addressedit.html?id"+id
-				},
 				goHome() {
 					location.href = "index.html"
 				},
